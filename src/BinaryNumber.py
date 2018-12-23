@@ -8,8 +8,12 @@ class BinaryNumber:
     """
     LENGTH = 8
 
-    def __init__(self):
+    def __init__(self, binary_string: str = None):
         self.array = [0] * BinaryNumber.LENGTH
+
+        if binary_string is not None:
+            for i in range(BinaryNumber.LENGTH):
+                self.array[i] = binary_string[i]
 
     def decimal(self) -> int:
         result: int = 0

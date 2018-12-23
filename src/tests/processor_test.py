@@ -19,10 +19,10 @@ def addition_test():
         processor.load(A)
         processor.add(B)
 
-        if processor.accumulator.decimal() == A.decimal() + B.decimal():
+        if processor.registers[Processor.ACCUMULATOR].decimal() == A.decimal() + B.decimal():
             passed += 1
 
-    print("ADDITION TEST: {}/{}".format(passed, cases))
+    print(f"ADDITION TEST: {passed}/{cases}")
 
 
 addition_test()
