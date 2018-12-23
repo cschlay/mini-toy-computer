@@ -25,4 +25,17 @@ def addition_test():
     print(f"ADDITION TEST: {passed}/{cases}")
 
 
+def compiled_source_test():
+    """
+    Tests whether the processor can process compiled sources from text files.
+    """
+    processor.load_program("test_program.compiled")
+    message = "COMPILED SOURCE TEST: - {} -"
+    if processor.execute():
+        print(message.format("PASSED"))
+    else:
+        print(message.format("FAILED"))
+
+
 addition_test()
+compiled_source_test()

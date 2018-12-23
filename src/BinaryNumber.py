@@ -13,7 +13,7 @@ class BinaryNumber:
 
         if binary_string is not None:
             for i in range(BinaryNumber.LENGTH):
-                self.array[i] = binary_string[i]
+                self.array[i] = int(binary_string[i])
 
     def decimal(self) -> int:
         result: int = 0

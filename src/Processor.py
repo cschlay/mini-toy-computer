@@ -2,7 +2,6 @@
 # MIT License https://en.wikipedia.org/wiki/MIT_License
 
 from BinaryNumber import BinaryNumber
-from Register import Register
 
 
 class Processor:
@@ -12,24 +11,16 @@ class Processor:
     """
     REGISTER_COUNT = 8
     ACCUMULATOR = 0
-    INSTRUCTION_COUNTER = 1
 
     def __init__(self):
         """
         Constructs a new virtual processor with pre-defined register count.
         Register 0 is used as accumulator.
-        Register 1 is used as instruction counter.
         The rest are freely usable.
         """
-        self.registers: list = [Register] * Processor.REGISTER_COUNT
+        self.registers: list = [BinaryNumber] * Processor.REGISTER_COUNT
         self.instruction_memory: list = []
-
-    def load(self, immediate: BinaryNumber):
-        """
-        Instruction: LDA, I
-        Load a value to the accumulator.
-        """
-        self.registers[0] = immediate
+        self.instruction_counter: int = 0
 
     def add(self, immediate: BinaryNumber):
         """
@@ -62,10 +53,25 @@ class Processor:
         Sets the instruction counter to value A if the accumulator is greater than 0.
         """
         if self.registers[Processor.ACCUMULATOR].decimal() > 0:
-            self.registers[Processor.INSTRUCTION_COUNTER] = address     # Set the instruction counter to address A.
+            self.instruction_counter = address     # Set the instruction counter to address A.
+
+    def copy(self, address: int):
+        """
+        Instruction: CPY, A
+        Copies accumulator data to register A.
+        """
+        self.registers[address] = self.registers[Processor.ACCUMULATOR]
+
+    def load(self, immediate: BinaryNumber):
+        """
+        Instruction: LDA, I
+        Load a value to the accumulator.
+        """
+        self.registers[0] = immediate
 
     def read(self, address: int):
         """
+        Instruction: READ, A
         Read an value into register A.
         Currently only supporting bare binary inputs.
         """
@@ -80,15 +86,66 @@ class Processor:
         else:
             print("INCORRECT INPUT")
 
-    def copy(self, address: int):
+    def print(self, address: int):
         """
-        Instruction: CPY, A
-        Copies accumulator data to register A.
+        Instruction: PRINT, A
+        Print the contents of register A.
         """
-        self.registers[address] = self.registers[Processor.ACCUMULATOR]
+        print(self.registers[address])
 
-    def substract(self):
+    def subtract(self, immediate: BinaryNumber):
+        """
+        Instruction: SUB, I
+        Performs a subtraction on accumulator such that accumulator -= I.
+        """
         pass
 
-    def print(self, address: int):
-        print(self.registers[address])
+    def load_program(self, program_location: str):
+        """
+        Loads a program into instruction memory.
+        Does not replace the existing ones, it just appends the memory.
+        """
+        with open(program_location) as program:
+            for instruction in program:
+                self.instruction_memory.append(instruction)
+
+    def execute(self) -> bool:
+        """
+        Executes the instructions in the memory.
+        Return true if a program is successfully executed.
+
+        https://en.wikipedia.org/wiki/Instruction_cycle
+        """
+        while self.instruction_counter < len(self.instruction_memory):
+            # "Fetching" an instruction.
+            instruction: list = self.instruction_memory[
+                                    self.instruction_counter].split()
+
+            # For every instruction[0] is the operation and the rest are arguments.
+            op: str = instruction[0]
+            ar: BinaryNumber = BinaryNumber(instruction[1])
+
+            # Execution phase.
+            if op == "LDA":
+                self.load(ar)
+            elif op == "ADD":
+                self.add(ar)
+            # elif op == "SUB":
+            #
+            elif op == "CPY":
+                self.copy(ar.decimal())
+            elif op == "BPA":
+                self.branch(ar.decimal())
+                # We have to set it one lower because it will get incremented.
+                self.instruction_counter -= 1
+            elif op == "READ":
+                self.read(ar.decimal())
+            elif op == "PRINT":
+                self.print(ar.decimal())
+            # If a command is unknown, we stop the program.
+            else:
+                self.instruction_counter += len(self.instruction_memory)
+
+            self.instruction_counter += 1
+
+        return True
