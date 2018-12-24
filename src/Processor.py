@@ -19,6 +19,7 @@ class Processor:
         The rest are freely usable.
         """
         self.registers: list = [BinaryNumber] * Processor.REGISTER_COUNT
+        self.reserved_registers: list = [BinaryNumber] * 4
         self.instruction_memory: list = []
         self.instruction_counter: int = 0
 
@@ -98,7 +99,19 @@ class Processor:
         Instruction: SUB, I
         Performs a subtraction on accumulator such that accumulator -= I.
         """
-        pass
+        # Computing -x (see https://www.nand2tetris.org/course, project 2).
+        for i in range(BinaryNumber.LENGTH):
+            immediate[i] = 0 if immediate[i] else 1
+
+        # Using accumulator to add 1 to I.
+        self.reserved_registers[0] = self.registers[Processor.ACCUMULATOR]
+        self.load(immediate)
+        self.add(BinaryNumber("00000001"))
+        self.reserved_registers[1] = self.registers[Processor.ACCUMULATOR]
+        self.load(self.reserved_registers[0])
+
+        # Finally subtracting by using addition.
+        self.add(self.reserved_registers[1])
 
     def load_program(self, program_location: str):
         """
@@ -130,8 +143,8 @@ class Processor:
                 self.load(ar)
             elif op == "ADD":
                 self.add(ar)
-            # elif op == "SUB":
-            #
+            elif op == "SUB":
+                self.subtract(ar)
             elif op == "CPY":
                 self.copy(ar.decimal())
             elif op == "BPA":
