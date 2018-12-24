@@ -23,13 +23,13 @@ class Processor:
         self.instruction_memory: list = []
         self.instruction_counter: int = 0
 
-    def add(self, immediate: BinaryNumber):
+    def add(self, address: int):
         """
-        Instruction: ADD, I
-        Performs addition to value in the accumulator such that accumulator += I.
+        Instruction: ADD, R
+        Performs addition to value in the accumulator such that accumulator += register_R.
         """
         A: BinaryNumber = self.registers[Processor.ACCUMULATOR]
-        B: BinaryNumber = immediate
+        B: BinaryNumber = self.registers[address]
         C: BinaryNumber = BinaryNumber()
 
         carry = 0
@@ -94,11 +94,13 @@ class Processor:
         """
         print(self.registers[address])
 
-    def subtract(self, immediate: BinaryNumber):
+    def subtract(self, address: int):
         """
-        Instruction: SUB, I
-        Performs a subtraction on accumulator such that accumulator -= I.
+        Instruction: SUB, R
+        Performs a subtraction on accumulator such that accumulator -= register_R.
         """
+        immediate = self.registers[address]
+
         # Computing -x (see https://www.nand2tetris.org/course, project 2).
         for i in range(BinaryNumber.LENGTH):
             immediate[i] = 0 if immediate[i] else 1
@@ -142,7 +144,7 @@ class Processor:
             if op == "LDA":
                 self.load(ar)
             elif op == "ADD":
-                self.add(ar)
+                self.add(ar.decimal())
             elif op == "SUB":
                 self.subtract(ar)
             elif op == "CPY":

@@ -43,3 +43,9 @@ class BinaryNumber:
 
     def __str__(self):
         return str(self.array)
+
+    def real_str(self) -> str:
+        """
+        Returns the array as string such as '0000000'
+        """
+        return ''.join([str(bit) for bit in self.array])
