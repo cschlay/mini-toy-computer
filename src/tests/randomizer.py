@@ -2,7 +2,7 @@
 # MIT License https://en.wikipedia.org/wiki/MIT_License
 from random import randint
 
-from BinaryNumber import BinaryNumber
+from computer.BinaryNumber import BinaryNumber
 
 
 def random_binary_number() -> BinaryNumber:

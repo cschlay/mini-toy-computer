@@ -1,4 +1,4 @@
-from BinaryNumber import BinaryNumber
+from computer.BinaryNumber import BinaryNumber
 from computer.DiskManager import DiskManager
 from tests.randomizer import random_binary_number
 

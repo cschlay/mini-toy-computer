@@ -1,7 +1,7 @@
 # Copyright (c) 2018 - C. H. Lay
 # MIT License https://en.wikipedia.org/wiki/MIT_License
 
-from BinaryNumber import BinaryNumber
+from computer.BinaryNumber import BinaryNumber
 
 
 class Processor:

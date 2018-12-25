@@ -1,6 +1,6 @@
 # Copyright (c) 2018 - C. H. Lay
 # MIT License https://en.wikipedia.org/wiki/MIT_License
-from Processor import Processor
+from computer.Processor import Processor
 from tests.randomizer import random_binary_number
 
 processor = Processor()

@@ -1,9 +1,12 @@
 import sys
 
+from computer.Computer import Computer
+
 
 def main(argv):
-    pass
+    computer = Computer("disk1.sqlite3")
+    computer.boot()
 
 
-if __name__ == "main":
+if __name__ == "__main__":
     main(sys.argv)

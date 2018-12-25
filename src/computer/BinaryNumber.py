@@ -34,7 +34,6 @@ class BinaryNumber:
 
         return result
 
-
     def __getitem__(self, index):
         return self.array[index]
 
