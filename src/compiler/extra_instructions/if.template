@@ -1,0 +1,8 @@
+LDA 0
+ADD {}
+BPA __IF__
+__ELSE__
+LDA 1
+BPA __ENDIF__
+__IF__
+__ENDIF__
