@@ -13,7 +13,7 @@ def random_binary_number() -> BinaryNumber:
     result: BinaryNumber = BinaryNumber()
 
     i = BinaryNumber.LENGTH - 1
-    while i > 0:
+    while i >= 0:
         result[i] = randint(0, 1)
         i = i - 1
 

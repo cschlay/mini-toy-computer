@@ -11,4 +11,7 @@ class Computer:
         self.processor = Processor()
 
     def boot(self):
-        print("Mini Toy Computer by CscHLay Laboratories")
+        print("'Mini Toy Computer' by CscHLay Laboratories\n")
+        print("[*] To run a program write the program's filename.")
+        print("[*] To compile a program: COMPILE program_filename\n")
+        print("---")

@@ -19,7 +19,6 @@ class Processor:
         The rest are freely usable.
         """
         self.registers: list = [BinaryNumber] * Processor.REGISTER_COUNT
-        self.reserved_registers: list = [BinaryNumber] * 4
         self.instruction_memory: list = []
         self.instruction_counter: int = 0
 
@@ -46,7 +45,7 @@ class Processor:
         self.registers[Processor.ACCUMULATOR] = C
 
         if carry == 1:
-            print("OVERFLOW")
+            print(f"OVERFLOW {A} + {B}")
 
     def branch(self, address: int):
         """
@@ -61,7 +60,7 @@ class Processor:
         Instruction: CPY, A
         Copies accumulator data to register A.
         """
-        self.registers[address] = self.registers[Processor.ACCUMULATOR]
+        self.registers[address] = self.registers[Processor.ACCUMULATOR].copy()
 
     def load(self, immediate: BinaryNumber):
         """
@@ -99,21 +98,28 @@ class Processor:
         Instruction: SUB, R
         Performs a subtraction on accumulator such that accumulator -= register_R.
         """
-        immediate = self.registers[address]
+        immediate = self.registers[address].copy()
 
         # Computing -x (see https://www.nand2tetris.org/course, project 2).
         for i in range(BinaryNumber.LENGTH):
             immediate[i] = 0 if immediate[i] else 1
 
-        # Using accumulator to add 1 to I.
-        self.reserved_registers[0] = self.registers[Processor.ACCUMULATOR]
+        # Accumulator to register 1.
+        self.copy(1)
+        # Value 1 to register 2.
+        self.load(BinaryNumber("00000001"))
+        self.copy(2)
+        # Performing I + 1.
         self.load(immediate)
-        self.add(BinaryNumber("00000001"))
-        self.reserved_registers[1] = self.registers[Processor.ACCUMULATOR]
-        self.load(self.reserved_registers[0])
+        self.add(2)
+        self.copy(2)
 
         # Finally subtracting by using addition.
-        self.add(self.reserved_registers[1])
+        # Clearing the accumulator
+        self.load(BinaryNumber())
+        # A - B
+        self.add(1)
+        self.add(2)
 
     def load_program(self, program_location: str):
         """
