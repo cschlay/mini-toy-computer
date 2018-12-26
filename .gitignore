@@ -2,3 +2,4 @@
 *.sqlite3
 *.sqlite3-journal
 *test_results.txt
+compiled/
