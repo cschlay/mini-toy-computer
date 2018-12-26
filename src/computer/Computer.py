@@ -34,7 +34,7 @@ class Computer:
                 except IndexError:
                     print("ERROR: Command 'compile' needs a filename.")
             elif command[0] in {"runloc", "RUNLOC"}:
-                self.processor.load_program(f"programs/{command[1]}")
+                self.processor.load_program(f"programs/compiled/{command[1]}")
                 self.processor.execute()
             else:
                 print("ERROR: Unknown Command.")

@@ -32,7 +32,7 @@ class Compiler:
             for line in program:
                 processed_line: str = process_line(line)
                 if processed_line is not None:
-                    executable.write(processed_line)
+                    executable.write(f"{processed_line}\n")
 
             program.close()
             executable.close()
