@@ -12,12 +12,27 @@ The compiler is currently missing so, you have to use binary numbers and not com
 2. You can then run the programs stored at ```src/programs```.
 
 ## Terminal Commands
+Programs should be stored at directory ``src/programs``.
+The compiled programs are stored at ``src/programs/compiled``.
 
+When we say "disk" we mean an ``*.sqlite3`` database.
+It does not work like a real disk.
+
+| Command                     | Action |
+| --------------------------- | ------ |
+| ``COMPILE <program_name>`` | Compiles a program such that is runnable. |
+| ``INSTALL <program_name>`` | Compiles and installs it to a disk. |
+| ``RUNLOC <program_name>`` | Runs a program stored at ``src/programs/compiled``. |
+| ``RUN <program_name>`` | Runs a program from the disk.|
 
 ## Supported Instructions
+The 8-instruction base set according to [Wikipedia](https://en.wikipedia.org/wiki/Random-access_stored-program_machine)
+is an universal turing machine which implies that you should be able to do anything computable.
+The problem is just that it is not very obvious.
+
 You can extend the instruction set by putting them in ```compiler/extra_instructions```.
 
-The table described [here](https://en.wikipedia.org/wiki/Random-access_stored-program_machine#RASP_program-instruction_set_of_Cook_and_Reckhow_(1973)).
+The set ```{ADD, BPA, CPY (STORE), HALT, LDA (LOAD), SUB, PRINT, READ,}``` is described [here](https://en.wikipedia.org/wiki/Random-access_stored-program_machine#RASP_program-instruction_set_of_Cook_and_Reckhow_(1973)).
 The instruction format in our toy computer is ```<INSTRUCTION> <ARGUMENT>```.
 Each part is separated by spaces and comment begins with ```#``` character followed by space.
 

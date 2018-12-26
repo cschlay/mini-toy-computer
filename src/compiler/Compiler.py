@@ -1,4 +1,4 @@
-from pathlib import Path
+import os
 
 
 class Compiler:
@@ -6,6 +6,19 @@ class Compiler:
         'ADD', 'SUB', 'MUL',
     }
 
+    def __init__(self, root_directory: str = "programs"):
+        self.ROOT: str = root_directory
+        self.COMPILED = f"{self.ROOT}/compiled"
+        if not os.path.exists(self.COMPILED):
+            os.makedirs(self.COMPILED)
+
+    def compile(self, file: str):
+        try:
+            with open(file) as program:
+                for line in program:
+                    pass
+        except:
+            print("ERROR: Program not found, did you compile it first?")
 
 def process_line(self, line: str) -> [str] or None:
     """
@@ -13,8 +26,8 @@ def process_line(self, line: str) -> [str] or None:
     Return a line as an array.
     If a line does not have valid instructions, it will return None.
     """
-    line_splitted = line.split()
-    if line_splitted in Compiler.INSTRUCTION_SET:
+    line_splitted: list = line.split()
+    if line_splitted[0] in Compiler.INSTRUCTION_SET:
         cut_index = 0
         for token in range(len(line_splitted)):
             if token == '#':

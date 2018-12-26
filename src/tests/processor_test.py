@@ -48,10 +48,10 @@ for i in range(CASES):
     f.write(f"-: {C} = {C.decimal()}\n")
 
     if C.decimal() == (A.decimal() - B.decimal()):
-        f.write("PASSED\n")
+        f.write("PASSED\n\n")
         subtraction_passed += 1
     else:
-        f.write("FAILED\n")
+        f.write("FAILED\n\n")
 
 f.write(f"ADDITION: {addition_passed}/{CASES}\n")
 f.write(f"SUBTRACTION: {subtraction_passed}/{CASES}")
