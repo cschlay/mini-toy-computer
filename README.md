@@ -21,8 +21,6 @@ It does not work like a real disk.
 | Command                     | Action |
 | --------------------------- | ------ |
 | ``COMPILE <program_name>`` | Compiles a program such that is runnable. |
-| ``INSTALL <program_name>`` | Compiles and installs it to a disk. |
-| ``RUNLOC <program_name>`` | Runs a program stored at ``src/programs/compiled``. |
 | ``RUN <program_name>`` | Runs a program from the disk.|
 
 ## Supported Instructions
