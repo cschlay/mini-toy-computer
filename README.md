@@ -1,15 +1,14 @@
 # Mini Toy Computer
 
 The project is based on [RASP-Machine](https://en.wikipedia.org/wiki/Random-access_stored-program_machine).
-I use this to practice data structures and algorithms on very low-level.
-This is also a project to learn more about computers.
+This is also a project to learning more about computers and algorithms.
 
 The machine can already process the basic instructions described in Wikipedia.
-The compiler is currently missing so, you have to use binary numbers and not comment your code.
 
 ## Use Instruction
 1. Start the computer by running ```src/main.py```. It should just work.
 2. You can then run the programs stored at ```src/programs```.
+The demo program is not okay atm.
 
 ## Terminal Commands
 Programs should be stored at directory ``src/programs``.
@@ -42,3 +41,6 @@ LDA   0000_1000  # Set 8 to accumulator.
 CPY   0000_0011  # Copying the value from accumulator to register 3.
 PRINT 0000_0011  # Print the value of register 3.
 ```
+
+## Limits
+According to the binary_number_test.py it seems like we get incorrect results when the numbers are outside the range of [-128, 127].
