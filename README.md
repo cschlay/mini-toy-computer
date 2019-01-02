@@ -21,7 +21,7 @@ It does not work like a real disk.
 | Command                     | Action |
 | --------------------------- | ------ |
 | ``COMPILE <program_name>`` | Compiles a program such that is runnable. |
-| ``RUN <program_name>`` | Runs a program from the disk.|
+| ``RUNLOC <program_name>`` | Runs a compiled program.|
 
 ## Supported Instructions
 The 8-instruction base set according to [Wikipedia](https://en.wikipedia.org/wiki/Random-access_stored-program_machine)
