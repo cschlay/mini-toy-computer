@@ -23,7 +23,7 @@ class Compiler:
         try:
             program = open(f"{self.ROOT}/{file}", 'r')
 
-            object_file: str = PurePath(file).stem + '.byte'
+            object_file: str = PurePath(file).stem + ".byte"
 
             try:
                 executable = open(f"{self.COMPILED}/{object_file}", 'x')
