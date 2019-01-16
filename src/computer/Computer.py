@@ -14,8 +14,8 @@ class Computer:
     def boot(self):
         print("'Mini Toy Computer' by CscHLay Laboratories\n")
         print("[*] Switch off the computer: SHUTDOWN")
-        print("[*] Compile a program:       COMPILE program_filename")
-        print("[*] Run a program:           RUNLOC  program_filename")
+        print("[*] Compile a program:       COMPILE program_filename.asm")
+        print("[*] Run a program:           RUNLOC  program_filename.o")
         print("\nSee README.md for more commands.\n")
         print("---")
         run = True

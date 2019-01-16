@@ -1,4 +1,5 @@
 import os
+from pathlib import PurePath
 
 
 class Compiler:
@@ -22,11 +23,12 @@ class Compiler:
         try:
             program = open(f"{self.ROOT}/{file}", 'r')
 
-            executable = None
+            object_file: str = PurePath(file).stem + '.byte'
+
             try:
-                executable = open(f"{self.COMPILED}/{file}", 'x')
+                executable = open(f"{self.COMPILED}/{object_file}", 'x')
             except FileExistsError:
-                executable = open(f"{self.COMPILED}/{file}", 'w')
+                executable = open(f"{self.COMPILED}/{object_file}", 'w')
 
             # Process the lines and write them if possible.
             for line in program:

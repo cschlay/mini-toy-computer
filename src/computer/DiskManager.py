@@ -17,7 +17,11 @@ class DiskManager:
         self.location: str = disk_location
         self.partition: str = partition
         disk = connect(self.location)
-        disk.execute(f"CREATE TABLE IF NOT EXISTS {self.partition} (address INTEGER PRIMARY KEY, data TEXT)")
+        disk.execute(f"CREATE TABLE IF NOT EXISTS {self.partition} (address INTEGER PRIMARY KEY, data TEXT NOT NULL)")
+
+        # se = Start Address, ea = End Address
+        disk.execute("CREATE TABLE IF NOT EXISTS programs"
+                     "(name TEXT PRIMARY KEY, sa INTEGER NOT NULL, ea INTEGER NOT NULL)")
         disk.close()
 
     def read(self, address: int) -> BinaryNumber:
@@ -38,7 +42,7 @@ class DiskManager:
 
     def write(self, address: int, data: BinaryNumber):
         """
-        Writes data to the disk.
+        Write data to the disk.
         """
         disk = connect(self.location)
         cursor = disk.cursor()
@@ -51,3 +55,16 @@ class DiskManager:
             disk.execute(f"UPDATE {self.partition} SET data = '{data_string}' WHERE address = {address}")
         disk.commit()
         disk.close()
+
+    def is_empty(self, start: int, end: int) -> bool:
+        """
+        Check whether addresses [start, end] are empty.
+        """
+        disk = connect(self.location)
+        cursor = disk.cursor()
+        cursor.execute(f"SELECT * FROM {self.partition} WHERE address >= {start} and address <= {end}")
+
+        status: bool = cursor.fetchone is None
+        disk.close()
+
+        return status
