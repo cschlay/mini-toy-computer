@@ -1,6 +1,6 @@
 # Copyright (c) 2018 - C. H. Lay
 # MIT License https://en.wikipedia.org/wiki/MIT_License
-
+from compiler.Compiler import Compiler
 from computer.BinaryNumber import BinaryNumber
 
 
@@ -128,7 +128,7 @@ class Processor:
         """
         with open(program_location) as program:
             for instruction in program:
-                self.instruction_memory.append(instruction)
+                self.instruction_memory.append(instruction.replace('\n', ''))
 
     def execute(self) -> bool:
         """
@@ -144,7 +144,10 @@ class Processor:
 
             # For every instruction[0] is the operation and the rest are arguments.
             op: str = instruction[0]
-            ar: BinaryNumber = BinaryNumber(instruction[1])
+
+            ar = None
+            if len(instruction) == 2:
+                ar = instruction[1] if op == "BPA2" else BinaryNumber(instruction[1])
 
             # Execution phase.
             if op == "LDA":
@@ -152,17 +155,28 @@ class Processor:
             elif op == "ADD":
                 self.add(ar.decimal())
             elif op == "SUB":
-                self.subtract(ar)
+                self.subtract(ar.decimal())
             elif op == "CPY":
                 self.copy(ar.decimal())
             elif op == "BPA":
                 self.branch(ar.decimal())
-                # We have to set it one lower because it will get incremented.
                 self.instruction_counter -= 1
+            elif op == "BPA2":
+                # Find the tag.
+                i: int = 0
+
+                for x in self.instruction_memory:
+                    if x == ar:
+                        self.branch(i)
+                        print(i)
+                    i += 1
             elif op == "READ":
                 self.read(ar.decimal())
             elif op == "PRINT":
                 self.print(ar.decimal())
+            # The instruction is a tag.
+            elif "__" in op:
+                pass
             # If a command is unknown, we stop the program.
             else:
                 self.instruction_counter += len(self.instruction_memory)

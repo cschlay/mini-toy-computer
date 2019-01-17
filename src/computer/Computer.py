@@ -1,3 +1,5 @@
+import traceback
+
 from compiler.Compiler import Compiler
 from computer.DiskManager import DiskManager
 from computer.Processor import Processor
@@ -15,7 +17,7 @@ class Computer:
         print("'Mini Toy Computer' by CscHLay Laboratories\n")
         print("[*] Switch off the computer: SHUTDOWN")
         print("[*] Compile a program:       COMPILE program_filename.asm")
-        print("[*] Run a program:           RUNLOC  program_filename.o")
+        print("[*] Run a program:           RUNLOC  program_filename.byte")
         print("\nSee README.md for more commands.\n")
         print("---")
         run = True

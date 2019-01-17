@@ -43,4 +43,4 @@ PRINT 0000_0011  # Print the value of register 3.
 ```
 
 ## Limits
-According to the binary_number_test.py it seems like we get incorrect results when the numbers are outside the range of [-128, 127].
+According to the processor_test.py it seems like we get incorrect results when the numbers are outside the range of [-128, 127].
